@@ -22,7 +22,7 @@ public class Timer : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        Debug.Log("Timer = " + timer);
+        //Debug.Log("Timer = " + timer);
 
         if (timer > 10.0f && timer < 20.0f)
         {
