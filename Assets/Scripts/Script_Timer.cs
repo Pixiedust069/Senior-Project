@@ -1,6 +1,6 @@
 ﻿// Kenneth Gower
 // GSP 497
-// 1/20/2015
+// 2/1/2015
 
 /* This script will start a timer at the beginning of the game. As the game
    progresses, the timer will increase and the screen will grow dimmer. This
@@ -8,7 +8,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Timer : MonoBehaviour
+public class Script_Timer : MonoBehaviour
 {
 
     float timer; // variable for our timer.
@@ -28,11 +28,11 @@ public class Timer : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-
+        
+        // The countdown timer is set for 30 seconds. This is for ease of testing, it can be increased for normal gameplay.
+        // I want to try and add a pulsating effect rather just a static dimming.
         if (timer > 10.0f && timer < 20.0f)
         {
-            Debug.Log("Darker...");
-
             // After ten seconds have passed change the color of the renderer's ambient light settings and
             // the point light. This will make the scene darker.
             RenderSettings.ambientLight = new Color(0.18f, 0.18f, 0.18f, 1.0f);
@@ -42,8 +42,6 @@ public class Timer : MonoBehaviour
 
         else if (timer > 20.0f && timer < 30.0f)
         {
-            Debug.Log("Darker still...");
-
             // After twenty seconds make the renderer's abient light and the point light even darker.
             RenderSettings.ambientLight = new Color(0.08f, 0.08f, 0.08f, 1.0f);
             _light.light.color = new Color(0.25f, 0.25f, 0.25f, 1.0f);
@@ -51,8 +49,6 @@ public class Timer : MonoBehaviour
 
         else if (timer > 30.0f)
         {
-            Debug.Log("Black. Game over.");
-
             // After thirty seconds turn everything black, and stop the game.
             RenderSettings.ambientLight = Color.black;
             _light.light.color = Color.black;
