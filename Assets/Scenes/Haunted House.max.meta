@@ -129,6 +129,11 @@ ModelImporter:
     100246: Table003
     100248: Table2
     100250: Wall001
+    100252: Bed
+    100254: BedTable
+    100256: House 1
+    100258: Lampshade
+    100260: LongTableBedrm
     400000: BiFoldDoor001
     400002: Box001
     400004: Box002
@@ -255,6 +260,11 @@ ModelImporter:
     400246: Table003
     400248: Table2
     400250: Wall001
+    400252: Bed
+    400254: BedTable
+    400256: House 1
+    400258: Lampshade
+    400260: LongTableBedrm
     2300000: BiFoldDoor001
     2300002: Box001
     2300004: Box002
@@ -347,6 +357,10 @@ ModelImporter:
     2300178: Table003
     2300180: Table2
     2300182: Wall001
+    2300184: Bed
+    2300186: BedTable
+    2300188: House 1
+    2300190: Lampshade
     3300000: BiFoldDoor001
     3300002: Box001
     3300004: Box002
@@ -439,6 +453,10 @@ ModelImporter:
     3300178: Table003
     3300180: Table2
     3300182: Wall001
+    3300184: Bed
+    3300186: BedTable
+    3300188: House 1
+    3300190: Lampshade
     4300000: House
     4300002: Plane001
     4300004: Pyramid002
@@ -531,6 +549,9 @@ ModelImporter:
     4300178: Chocolate002
     4300180: Wall001
     4300182: BiFoldDoor001
+    4300184: Lampshade
+    4300186: Bed
+    4300188: BedTable
     9500000: //RootNode
   materials:
     importMaterials: 1
