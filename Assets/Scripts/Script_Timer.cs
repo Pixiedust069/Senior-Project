@@ -12,7 +12,7 @@ public class Script_Timer : MonoBehaviour
 {
 
     float timer; // variable for our timer.
-    GameObject _light; // variable to access the point light in the test scene. 
+    GameObject[] _lights; // Array to access the all point lights in the test scene. 
 
    
     // Use this for initialization
@@ -20,7 +20,7 @@ public class Script_Timer : MonoBehaviour
     {
         timer = 0.0f;
 
-        _light = GameObject.FindGameObjectWithTag("MainLight");
+        _lights = GameObject.FindGameObjectsWithTag("MainLight");
         
     }
 
@@ -36,7 +36,10 @@ public class Script_Timer : MonoBehaviour
             // After ten seconds have passed change the color of the renderer's ambient light settings and
             // the point light. This will make the scene darker.
             RenderSettings.ambientLight = new Color(0.18f, 0.18f, 0.18f, 1.0f);
-            _light.light.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
+            for (int i = 0; i < _lights.Length; i++)
+            {
+                _lights[i].light.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
+            }
             
         }
 
@@ -44,14 +47,20 @@ public class Script_Timer : MonoBehaviour
         {
             // After twenty seconds make the renderer's abient light and the point light even darker.
             RenderSettings.ambientLight = new Color(0.08f, 0.08f, 0.08f, 1.0f);
-            _light.light.color = new Color(0.25f, 0.25f, 0.25f, 1.0f);
+            for (int i = 0; i < _lights.Length; i++)
+            {
+                _lights[i].light.color = new Color(0.25f, 0.25f, 0.25f, 1.0f);
+            }
         }
 
         else if (timer > 30.0f)
         {
             // After thirty seconds turn everything black, and stop the game.
             RenderSettings.ambientLight = Color.black;
-            _light.light.color = Color.black;
+            for (int i = 0; i < _lights.Length; i++)
+            {
+                _lights[i].light.color = Color.black;
+            }
             Time.timeScale = 0;
         }
     }
