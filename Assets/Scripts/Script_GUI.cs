@@ -49,7 +49,7 @@ public class Script_GUI : MonoBehaviour
             // Make sure that highlight is set to false when we are not looking at a piece of candy.
             highlight = false;
 
-            print("I'm looking at " + hit.transform.tag);
+            //print("I'm looking at " + hit.transform.tag);
             if (hit.transform.tag == "Candy")
             {
                 highlight = true;
@@ -102,7 +102,7 @@ public class Script_GUI : MonoBehaviour
         else
         {
             highlight = false;
-            print("I'm looking at nothing!");
+            //print("I'm looking at nothing!");
         }
         // ++++++++++++++++++++ //        
     }
