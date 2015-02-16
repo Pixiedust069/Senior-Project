@@ -28,7 +28,7 @@ public class Script_GUI : MonoBehaviour
 
     void Start()
     {
-        timer = 300.0f; // Set the countdown timer to start at 300 seconds. This is for ease of testing, it can be changed for normal gameplay.
+        timer = 90.0f; // Set the countdown timer to start at 300 seconds. This is for ease of testing, it can be changed for normal gameplay.
         gameOver = false;
         highlight = false;
         score = 0;
