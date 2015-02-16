@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿// Kenneth Gower
+// GSP 497
+// 2/5/2015
+using UnityEngine;
 using System.Collections;
 
 public class Script_FSM : MonoBehaviour
