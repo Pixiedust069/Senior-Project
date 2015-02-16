@@ -15,8 +15,7 @@ using System.Collections;
 
 public class Script_GUI : MonoBehaviour 
 {
-
-	public Texture reticle; // Our reticle to guide the player, this way the player knows where the center of the screen is.
+    public Texture reticle; // Our reticle to guide the player, this way the player knows where the center of the screen is.
     float timer; // Variable for the GUI countdown timer.
     bool gameOver; // Bool so we can print the main HUD only if the game is not over.
     bool highlight; // Bool so we can highligh candy in the OnGUI function.
@@ -26,12 +25,14 @@ public class Script_GUI : MonoBehaviour
 
     int score; // the current score.
 
+    GameObject[] _candies;
+
     void Start()
     {
-        timer = 90.0f; // Set the countdown timer to start at 300 seconds. This is for ease of testing, it can be changed for normal gameplay.
+        timer = 900.0f; // Set the countdown timer to start at 300 seconds. This is for ease of testing, it can be changed for normal gameplay.
         gameOver = false;
         highlight = false;
-        score = 0;
+        score = 0;       
     }
 
     // Update is called once per frame
@@ -39,6 +40,10 @@ public class Script_GUI : MonoBehaviour
     {
         timer -= Time.deltaTime; // Subtract using time.deltaTime, the same concept as in the Timer.cs, but backwards since we're counting down.
 
+        // Populate _candies with every candy object. As candies are grabbed by the player they will be removed from _candies.
+        // It might be better to move this into the GetMouseButtonDown part of the code and first define _candies in Start().
+        _candies = GameObject.FindGameObjectsWithTag("Candy"); 
+ 
         // From Unity3D Script Reference.
         // Casting a Ray from the center of the screen. When it hits something we check the tag, if it's tagged "Candy"
         // we put a highlight effect around it and if the player clicks on the Candy, we destroy the candy and increase the score.
@@ -96,7 +101,7 @@ public class Script_GUI : MonoBehaviour
                 {
                     Destroy(hit.transform.gameObject);
                     score += 10;
-                }
+                }                
             }
         }
         else
@@ -146,5 +151,17 @@ public class Script_GUI : MonoBehaviour
             GUI.Label(new Rect((Screen.width / 2), ((Screen.height / 2) + 30), 100, 20), "Final Score: " + score.ToString());
         }
         // ++++++++++++++++++++ //
+
+        // Game over win text
+        if (_candies.Length == 0)
+        {
+            gameOver = true;
+            Time.timeScale = 0;
+            RenderSettings.ambientLight = Color.black;
+
+            GUI.Label(new Rect((Screen.width / 2), (Screen.height / 2) - 30, 500, 20), "Congratulations! You got all the candy!");
+            GUI.Label(new Rect((Screen.width / 2), (Screen.height / 2), 100, 20), "Game Over");
+            GUI.Label(new Rect((Screen.width / 2), ((Screen.height / 2) + 30), 100, 20), "Final Score: " + score.ToString());
+        }
     }
 }
