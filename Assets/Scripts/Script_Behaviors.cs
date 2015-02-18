@@ -21,16 +21,25 @@ public class Script_Behaviors : MonoBehaviour
     Vector3 searchPos;          // The position the ghost will move to during it's search behavior.
     public int searchCount;     // The count of how many times it's picked a serach position.
 
+    GameObject[] _lights;       // Array to access the all point lights in the test scene.
+
+    float lPulseCount;
+    bool jumpLeft;
+
 	// Use this for initialization
 	void Start () 
     {
         Random.seed = (int)System.DateTime.Now.Ticks;
 
+        _lights = GameObject.FindGameObjectsWithTag("MainLight");
         _player = GameObject.FindGameObjectWithTag("Player");
         velocity = new Vector3(0, 0, 0);
         speed = 3.0f;
         rotSpeed = 1.5f;
         up = true;
+        lPulseCount = 1.0f;
+
+        bool jumpLeft = true;
 	}	
 
     public void idle()
@@ -117,5 +126,44 @@ public class Script_Behaviors : MonoBehaviour
     {
         // Destroy the ghost.
         Destroy(this.gameObject);
+    }
+
+    public void scare()
+    {
+        Debug.Log("lPulseCount: " + lPulseCount);
+        
+        RenderSettings.ambientLight = new Color(0.08f, 0.08f, 0.08f, 1.0f);
+
+
+        //for (lPulseCount = 1.0f; lPulseCount > 0.05f; lPulseCount -= 0.05f)
+        //{
+        //    for (int i = 0; i < _lights.Length; i++)
+        //    {
+        //        _lights[i].light.color = new Color(lPulseCount, lPulseCount, lPulseCount, lPulseCount);
+        //        Debug.Log("lPulseCount Started at 1.0: " + _lights[i].light.color.ToString());
+        //    }
+        //}
+
+
+        //for (lPulseCount = 0.05f; lPulseCount < 1.0f; lPulseCount += 0.05f)
+        //{
+        //    for (int i = 0; i < _lights.Length; i++)
+        //    {
+        //        _lights[i].light.color = new Color(lPulseCount, lPulseCount, lPulseCount, lPulseCount);
+        //        Debug.Log("lPulseCount Started at 0.05: " + _lights[i].light.color.ToString());
+        //    }
+        //}
+
+        if (jumpLeft)
+        {
+            this.transform.position = new Vector3((this.transform.position.x - 0.5f), this.transform.position.y, this.transform.position.z);
+            jumpLeft = false;
+        }
+        else
+        {
+            this.transform.position = new Vector3((this.transform.position.x + 0.5f), this.transform.position.y, this.transform.position.z);
+            jumpLeft = true;
+        }
+
     }
 }

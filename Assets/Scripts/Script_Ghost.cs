@@ -11,6 +11,7 @@ public class Script_Ghost : MonoBehaviour
     char search = 'b';
     char chase = 'c';
     char die = 'd';
+    char scare = 'e';
 
     public char curState; // the current state of the ghost.
     // ********** //
@@ -22,6 +23,7 @@ public class Script_Ghost : MonoBehaviour
     bool canSeePlayer;          // Bool for whether the ghost can see the player.
 
     GameObject _player;         // GameObject to access the player.
+     
     
 
 	// Use this for initialization
@@ -37,12 +39,14 @@ public class Script_Ghost : MonoBehaviour
         canSeePlayer = false;
 
         _player = GameObject.FindGameObjectWithTag("Player");
+        
 	}
 	
 	// Update is called once per frame
 	void Update () 
     {
-        distanceToPlayer = Vector3.Distance(_player.transform.position, transform.position);    
+        distanceToPlayer = Vector3.Distance(_player.transform.position, transform.position);
+        //Debug.Log(distanceToPlayer);
 
         // Check if the Ghost can see the player, if it can change states to Chase.
         if ((Vector3.Angle(transform.position, _player.transform.position)) < fov && distanceToPlayer < viewLimit) // Detect if player is within the field of view
@@ -60,6 +64,14 @@ public class Script_Ghost : MonoBehaviour
         {
             curState = chase;
             this.gameObject.GetComponent<Script_FSM>().stateTransition(curState);
+            
+            // If the ghost is close to the player change to the Scare state;
+            if (distanceToPlayer < 4.0f)
+            {
+                //Debug.Log("Entering Scare");
+                curState = scare;
+                this.gameObject.GetComponent<Script_FSM>().stateTransition(curState);
+            }
         }
         else
         {
@@ -84,6 +96,11 @@ public class Script_Ghost : MonoBehaviour
                     curState = die;
                     this.gameObject.GetComponent<Script_FSM>().setState(curState);
                 }
+            }
+            else if (curState == scare)
+            {
+                curState = search;
+                this.gameObject.GetComponent<Script_FSM>().stateTransition(curState);
             }
         }
         //*******************************//

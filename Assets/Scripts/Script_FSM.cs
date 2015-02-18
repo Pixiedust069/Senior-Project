@@ -11,6 +11,7 @@ public class Script_FSM : MonoBehaviour
     char search = 'b';
     char chase = 'c';
     char die = 'd';
+    char scare = 'e';
     
     public char curState; // The current state.
     //********//
@@ -34,6 +35,12 @@ public class Script_FSM : MonoBehaviour
             Debug.Log("Leaving Idle entering Chase");
             setState(newState);
         }
+        // Transition from Chase to Scare.
+        else if (curState == chase && newState == scare)
+        {
+            Debug.Log("Leaving Chase entering Scare");
+            setState(newState);
+        }
         // Transition from Chase to Search. Set searchCount to 0 and run pickRandomPosition() 
         // to pick the first random search point.
         else if (curState == chase && newState == search)
@@ -55,6 +62,12 @@ public class Script_FSM : MonoBehaviour
             Debug.Log("Leaving Search entering Chase");
             setState(newState);
         }
+        // Transition from Scare to Search
+        else if (curState == scare && newState == search)
+        {
+            Debug.Log("Leaving Scare entering Search");
+            setState(newState);
+        }
     }
 
     // Decide which state we should be in and then execute it.
@@ -73,6 +86,9 @@ public class Script_FSM : MonoBehaviour
                 break;
             case 'd':
                 dieState();
+                break;
+            case 'e':
+                scareState();
                 break;
         }
     }
@@ -99,5 +115,10 @@ public class Script_FSM : MonoBehaviour
     public void dieState()
     {
         this.GetComponent<Script_Behaviors>().die();
+    }
+
+    public void scareState()
+    {
+        this.GetComponent<Script_Behaviors>().scare();
     }
 }
