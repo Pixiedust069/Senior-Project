@@ -26,6 +26,9 @@ public class Script_GUI : MonoBehaviour
     int score; // the current score.
 
     GameObject[] _candies;
+    Transform scaleCandy;
+    Vector3 oldCandyScale;
+    Color oldCandyColor;
 
     void Start()
     {
@@ -53,7 +56,10 @@ public class Script_GUI : MonoBehaviour
         {
             // Make sure that highlight is set to false when we are not looking at a piece of candy.
             highlight = false;
-
+            if (scaleCandy != null)
+            {
+                scaleCandyDown(scaleCandy);
+            }
             //print("I'm looking at " + hit.transform.tag);
             if (hit.transform.tag == "Candy")
             {
@@ -63,37 +69,40 @@ public class Script_GUI : MonoBehaviour
                 // This will get the renderer bounds of the piece of candy that we're looking at, calculate the min and max positions
                 // so we can make a rect with the min and max positions of the candy to use for our highlight effect. This is slightly modified
                 // from TowerOfBricks' code found at: http://answers.unity3d.com/questions/292031/how-to-display-a-rectangle-around-a-player.html
-                Bounds b = hit.transform.renderer.bounds;
-                Camera cam = Camera.main;
-                //All 8 vertices of the bounds
-                pts[0] = cam.WorldToScreenPoint(new Vector3(b.center.x + b.extents.x, b.center.y + b.extents.y, b.center.z + b.extents.z));
-                pts[1] = cam.WorldToScreenPoint(new Vector3(b.center.x + b.extents.x, b.center.y + b.extents.y, b.center.z - b.extents.z));
-                pts[2] = cam.WorldToScreenPoint(new Vector3(b.center.x + b.extents.x, b.center.y - b.extents.y, b.center.z + b.extents.z));
-                pts[3] = cam.WorldToScreenPoint(new Vector3(b.center.x + b.extents.x, b.center.y - b.extents.y, b.center.z - b.extents.z));
-                pts[4] = cam.WorldToScreenPoint(new Vector3(b.center.x - b.extents.x, b.center.y + b.extents.y, b.center.z + b.extents.z));
-                pts[5] = cam.WorldToScreenPoint(new Vector3(b.center.x - b.extents.x, b.center.y + b.extents.y, b.center.z - b.extents.z));
-                pts[6] = cam.WorldToScreenPoint(new Vector3(b.center.x - b.extents.x, b.center.y - b.extents.y, b.center.z + b.extents.z));
-                pts[7] = cam.WorldToScreenPoint(new Vector3(b.center.x - b.extents.x, b.center.y - b.extents.y, b.center.z - b.extents.z));
+                //Bounds b = hit.transform.renderer.bounds;
+                //Camera cam = Camera.main;
+                ////All 8 vertices of the bounds
+                //pts[0] = cam.WorldToScreenPoint(new Vector3(b.center.x + b.extents.x, b.center.y + b.extents.y, b.center.z + b.extents.z));
+                //pts[1] = cam.WorldToScreenPoint(new Vector3(b.center.x + b.extents.x, b.center.y + b.extents.y, b.center.z - b.extents.z));
+                //pts[2] = cam.WorldToScreenPoint(new Vector3(b.center.x + b.extents.x, b.center.y - b.extents.y, b.center.z + b.extents.z));
+                //pts[3] = cam.WorldToScreenPoint(new Vector3(b.center.x + b.extents.x, b.center.y - b.extents.y, b.center.z - b.extents.z));
+                //pts[4] = cam.WorldToScreenPoint(new Vector3(b.center.x - b.extents.x, b.center.y + b.extents.y, b.center.z + b.extents.z));
+                //pts[5] = cam.WorldToScreenPoint(new Vector3(b.center.x - b.extents.x, b.center.y + b.extents.y, b.center.z - b.extents.z));
+                //pts[6] = cam.WorldToScreenPoint(new Vector3(b.center.x - b.extents.x, b.center.y - b.extents.y, b.center.z + b.extents.z));
+                //pts[7] = cam.WorldToScreenPoint(new Vector3(b.center.x - b.extents.x, b.center.y - b.extents.y, b.center.z - b.extents.z));
 
-                //Get them in GUI space
-                for (int i=0;i<pts.Length;i++) pts[i].y = Screen.height-pts[i].y;
-                //Calculate the min and max positions
-                Vector3 min = pts[0];
-                Vector3 max = pts[0];
-                for (int i = 1; i < pts.Length; i++)
-                {
-                    min = Vector3.Min(min, pts[i]);
-                    max = Vector3.Max(max, pts[i]);
-                }
+                ////Get them in GUI space
+                //for (int i=0;i<pts.Length;i++) pts[i].y = Screen.height-pts[i].y;
+                ////Calculate the min and max positions
+                //Vector3 min = pts[0];
+                //Vector3 max = pts[0];
+                //for (int i = 1; i < pts.Length; i++)
+                //{
+                //    min = Vector3.Min(min, pts[i]);
+                //    max = Vector3.Max(max, pts[i]);
+                //}
 
-                //Construct a rect of the min and max positions and apply some margin
-                r = Rect.MinMaxRect(min.x, min.y, max.x, max.y);
-                float margin = 0.5f;
-                r.xMin -= margin;
-                r.xMax += margin;
-                r.yMin -= margin;
-                r.yMax += margin;
-                // ++++++++++++++++++++ //               
+                ////Construct a rect of the min and max positions and apply some margin
+                //r = Rect.MinMaxRect(min.x, min.y, max.x, max.y);
+                //float margin = 0.5f;
+                //r.xMin -= margin;
+                //r.xMax += margin;
+                //r.yMin -= margin;
+                //r.yMax += margin;
+                //// ++++++++++++++++++++ //     
+
+                scaleCandy = hit.transform;
+                scaleCandyUp(scaleCandy);
 
                 // If the player clicks the left mouse button, destroy the GameObject that the Ray is hitting, then
                 // increase the score by 10.
@@ -108,18 +117,28 @@ public class Script_GUI : MonoBehaviour
         {
             highlight = false;
             //print("I'm looking at nothing!");
+            if (scaleCandy != null)
+            {
+                scaleCandyDown(scaleCandy);
+            }
         }
-        // ++++++++++++++++++++ //       
+        // ++++++++++++++++++++ //           
     }
 
     void scaleCandyUp(Transform candy)
     {
-        candy.transform.localScale += new Vector3(1.0f, 1.0f, 1.0f);
+        scaleCandy = candy;
+        oldCandyScale = candy.transform.localScale;
+        oldCandyColor = candy.renderer.material.color;
+        Debug.Log(oldCandyColor);
+        candy.transform.localScale = new Vector3(candy.transform.localScale.x + 0.05f, candy.transform.localScale.y + 0.05f, candy.transform.localScale.z + 0.05f);
+        candy.renderer.material.color = new Color(1.0f, 1.0f, 0.0f, 1.0f);
     }
 
     void scaleCandyDown(Transform candy)
     {
-        candy.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        candy.transform.localScale = oldCandyScale;
+        candy.renderer.material.color = oldCandyColor;
     }
 
     void OnGUI()
@@ -145,10 +164,10 @@ public class Script_GUI : MonoBehaviour
             // ++++++++++++++++++++ //
 
             // Highlight candy when it the reticle is targeting it.
-            if (highlight)
-            {
-                GUI.Box(r, " ");
-            }
+            //if (highlight)
+            //{
+            //    GUI.Box(r, " ");
+            //}
             // ++++++++++++++++++++ //
 
         }
