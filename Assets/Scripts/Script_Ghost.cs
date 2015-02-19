@@ -49,7 +49,7 @@ public class Script_Ghost : MonoBehaviour
         //Debug.Log(distanceToPlayer);
 
         // Check if the Ghost can see the player, if it can change states to Chase.
-        if ((Vector3.Angle(transform.position, _player.transform.position)) < fov && distanceToPlayer < viewLimit) // Detect if player is within the field of view
+        if ((Vector3.Angle(transform.position, _player.transform.position)) < fov && distanceToPlayer < viewLimit && transform.position.y > (_player.transform.position.y - 1.25f) && transform.position.y < (_player.transform.position.y + 1.25f)) // Detect if player is within the field of view
         {
             canSeePlayer = true;               
         }

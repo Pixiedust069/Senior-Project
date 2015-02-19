@@ -24,7 +24,12 @@ public class Script_Behaviors : MonoBehaviour
     GameObject[] _lights;       // Array to access the all point lights in the test scene.
 
     float lPulseCount;
+    float pulseTimer;
     bool jumpLeft;
+    bool darken;
+
+    Color oldAmbientLight;
+    Color oldPointLights;
 
 	// Use this for initialization
 	void Start () 
@@ -39,7 +44,9 @@ public class Script_Behaviors : MonoBehaviour
         up = true;
         lPulseCount = 1.0f;
 
-        bool jumpLeft = true;
+        jumpLeft = true;
+        darken = true;
+        pulseTimer = 0.0f;
 	}	
 
     public void idle()
@@ -81,7 +88,7 @@ public class Script_Behaviors : MonoBehaviour
         float newX = this.transform.position.x + Random.Range(2.0f, 5.0f);
         float newZ = this.transform.position.z + Random.Range(2.0f, 5.0f);
 
-        searchPos = new Vector3(newX, this.transform.position.y, newZ); 
+        searchPos = new Vector3(newX, transform.position.y, newZ); 
     }
 
     public void search()
@@ -94,12 +101,19 @@ public class Script_Behaviors : MonoBehaviour
 
         this.transform.position += (velocity * Time.deltaTime);
         // ********** //
+
+        // Rotate to face the player
+        Quaternion targetRotation = Quaternion.LookRotation(searchPos - this.transform.position);
+        float rSpeed = (rotSpeed * Time.deltaTime);
+        this.transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rSpeed);
+        // ********** //
         
         // When the ghost gets to the seek position add 1 to searchCount then pick a new random position to search.
         if (this.transform.position.x >= (searchPos.x - 1.0f) && this.transform.position.x <= (searchPos.x + 1.0f) || this.transform.position.z >= (searchPos.z - 1.0f) && this.transform.position.z <= (searchPos.z + 1.0f))
         {
             searchCount++;
             pickRandomPosition();
+            Debug.Log(searchPos);
         }
         // ********** //
     }
@@ -130,40 +144,100 @@ public class Script_Behaviors : MonoBehaviour
 
     public void scare()
     {
-        Debug.Log("lPulseCount: " + lPulseCount);
-        
         RenderSettings.ambientLight = new Color(0.08f, 0.08f, 0.08f, 1.0f);
 
+        // Rotate to face the player
+        Quaternion targetRotation = Quaternion.LookRotation(_player.transform.position - this.transform.position);
+        float rSpeed = (rotSpeed * Time.deltaTime);
+        this.transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rSpeed);
+        // ********** //
 
-        //for (lPulseCount = 1.0f; lPulseCount > 0.05f; lPulseCount -= 0.05f)
-        //{
-        //    for (int i = 0; i < _lights.Length; i++)
-        //    {
-        //        _lights[i].light.color = new Color(lPulseCount, lPulseCount, lPulseCount, lPulseCount);
-        //        Debug.Log("lPulseCount Started at 1.0: " + _lights[i].light.color.ToString());
-        //    }
-        //}
-
-
-        //for (lPulseCount = 0.05f; lPulseCount < 1.0f; lPulseCount += 0.05f)
-        //{
-        //    for (int i = 0; i < _lights.Length; i++)
-        //    {
-        //        _lights[i].light.color = new Color(lPulseCount, lPulseCount, lPulseCount, lPulseCount);
-        //        Debug.Log("lPulseCount Started at 0.05: " + _lights[i].light.color.ToString());
-        //    }
-        //}
-
-        if (jumpLeft)
+        if (pulseTimer == 0.0f)
         {
-            this.transform.position = new Vector3((this.transform.position.x - 0.5f), this.transform.position.y, this.transform.position.z);
-            jumpLeft = false;
-        }
-        else
-        {
-            this.transform.position = new Vector3((this.transform.position.x + 0.5f), this.transform.position.y, this.transform.position.z);
-            jumpLeft = true;
+            // Make the lights in the scene 'pulse' from light to dark and back.
+            if (darken)
+            {
+                dark();
+            }
+            else
+            {
+                bright();
+            }
+            // ********** //
+
+            // Jump to the left and right in a 'freaky' manner
+            if (jumpLeft)
+            {
+                this.transform.position = new Vector3((this.transform.position.x), this.transform.position.y, this.transform.position.z - 0.5f);
+                jumpLeft = false;
+            }
+            else
+            {
+                this.transform.position = new Vector3((this.transform.position.x), this.transform.position.y, this.transform.position.z + 0.5f);
+                jumpLeft = true;
+            }
+            // ********** //
         }
 
+        
+        // Timer to make the pulse effect feel right. Otherwise the effect would pulse by in less than a second.
+        pulseTimer += Time.deltaTime;
+        
+        if (pulseTimer > 0.05f)
+        {
+            pulseTimer = 0.0f;
+        }
+        // ********** //
+
+    }
+
+    public void dark()
+    {
+        Debug.Log("In Dark()");
+        lPulseCount -= 0.05f;       
+        for (int i = 0; i < _lights.Length; i++)
+        {
+            _lights[i].light.color = new Color(lPulseCount, lPulseCount, lPulseCount, lPulseCount);
+            Debug.Log("lPulseCount Started at 1.0: " + _lights[i].light.color.ToString());
+        }
+        
+        if (lPulseCount < 0.05f)
+        {
+            darken = false;
+        }
+    }
+
+    public void bright()
+    {
+        Debug.Log("In Bright()");
+        lPulseCount += 0.05f;
+        
+        for (int i = 0; i < _lights.Length; i++)
+        {
+            _lights[i].light.color = new Color(lPulseCount, lPulseCount, lPulseCount, lPulseCount);
+            Debug.Log("lPulseCount Started at 0.05: " + _lights[i].light.color.ToString());
+        }
+
+        if (lPulseCount > 1.0f)
+        {
+            darken = true;
+        }
+        
+    }
+
+    public void saveOldLights()
+    {
+        oldAmbientLight = RenderSettings.ambientLight;
+        oldPointLights = _lights[0].light.color;
+    }
+
+    public void restoreOldLights()
+    {
+        RenderSettings.ambientLight = oldAmbientLight;
+
+        for (int i = 0; i < _lights.Length; i++)
+        {
+            _lights[i].light.color = oldPointLights;
+        }
     }
 }

@@ -39,6 +39,7 @@ public class Script_FSM : MonoBehaviour
         else if (curState == chase && newState == scare)
         {
             Debug.Log("Leaving Chase entering Scare");
+            this.GetComponent<Script_Behaviors>().saveOldLights();
             setState(newState);
         }
         // Transition from Chase to Search. Set searchCount to 0 and run pickRandomPosition() 
@@ -66,6 +67,7 @@ public class Script_FSM : MonoBehaviour
         else if (curState == scare && newState == search)
         {
             Debug.Log("Leaving Scare entering Search");
+            this.GetComponent<Script_Behaviors>().restoreOldLights();
             setState(newState);
         }
     }

@@ -93,7 +93,7 @@ public class Script_GUI : MonoBehaviour
                 r.xMax += margin;
                 r.yMin -= margin;
                 r.yMax += margin;
-                // ++++++++++++++++++++ //
+                // ++++++++++++++++++++ //               
 
                 // If the player clicks the left mouse button, destroy the GameObject that the Ray is hitting, then
                 // increase the score by 10.
@@ -109,7 +109,17 @@ public class Script_GUI : MonoBehaviour
             highlight = false;
             //print("I'm looking at nothing!");
         }
-        // ++++++++++++++++++++ //        
+        // ++++++++++++++++++++ //       
+    }
+
+    void scaleCandyUp(Transform candy)
+    {
+        candy.transform.localScale += new Vector3(1.0f, 1.0f, 1.0f);
+    }
+
+    void scaleCandyDown(Transform candy)
+    {
+        candy.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
     }
 
     void OnGUI()
