@@ -18,10 +18,6 @@ public class Script_GUI : MonoBehaviour
     public Texture reticle; // Our reticle to guide the player, this way the player knows where the center of the screen is.
     float timer; // Variable for the GUI countdown timer.
     bool gameOver; // Bool so we can print the main HUD only if the game is not over.
-    bool highlight; // Bool so we can highligh candy in the OnGUI function.
-
-    Vector3[] pts = new Vector3[8]; // Array of Vector3's to hold the vertices of the bounds.
-    Rect r; // Rect for the Highlight Gui box.
 
     public int score; // the current score.
 
@@ -36,7 +32,6 @@ public class Script_GUI : MonoBehaviour
     {
         timer = 900.0f; // Set the countdown timer to start at 300 seconds. This is for ease of testing, it can be changed for normal gameplay.
         gameOver = false;
-        highlight = false;
         score = 0;       
     }
 
@@ -45,6 +40,7 @@ public class Script_GUI : MonoBehaviour
     {
         timer -= Time.deltaTime; // Subtract using time.deltaTime, the same concept as in the Timer.cs, but backwards since we're counting down.
 
+        Debug.Log("Vec3.up: " + Vector3.up);
         _ghost = GameObject.FindGameObjectWithTag("Ghost");
 
         // Populate _candies with every candy object. As candies are grabbed by the player they will be removed from _candies.

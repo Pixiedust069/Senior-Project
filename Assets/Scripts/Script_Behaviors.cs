@@ -46,7 +46,7 @@ public class Script_Behaviors : MonoBehaviour
 
     public bool subPoints;
 
-	// Use this for initialization
+	// Use this for initialization 
 	void Start () 
     {   
         Random.seed = (int)System.DateTime.Now.Ticks;
@@ -208,13 +208,13 @@ public class Script_Behaviors : MonoBehaviour
             {
                 _manager.GetComponent<Script_GUI>().score -= 10;
                 subPoints = true;
+                _manager.GetComponent<Script_CandySpray>().spawnCandy();
             }
-        }
-        
+        }        
 
         if (candyTimer > 0.5f)
         {
-            subPoints = false;
+            subPoints = false;            
         }
         
         
@@ -233,9 +233,10 @@ public class Script_Behaviors : MonoBehaviour
         if (candyTimer > 1.0f)
         {
             candyTimer = 0.0f;
+            _manager.GetComponent<Script_CandySpray>().destroyCandy();
         }
         // ********** //
-
+        Debug.Log("Candy Timer: " + candyTimer);
         
     }
 

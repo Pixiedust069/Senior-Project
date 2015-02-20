@@ -71,6 +71,7 @@ public class Script_FSM : MonoBehaviour
         else if (curState == scare && newState == search)
         {
             Debug.Log("Leaving Scare entering Search");
+            //_manager.GetComponent<Script_CandySpray>().destroyCandy();
             this.GetComponent<Script_Behaviors>().subPoints = false;
             this.GetComponent<Script_Behaviors>().restoreOldLights();
             this.GetComponent<Script_Behaviors>().searchCount = 0;
@@ -81,6 +82,7 @@ public class Script_FSM : MonoBehaviour
         else if (curState == scare && newState == chase)
         {
             Debug.Log("Leaving Scare entering Chase");
+            //_manager.GetComponent<Script_CandySpray>().destroyCandy();
             this.GetComponent<Script_Behaviors>().subPoints = false;
             this.GetComponent<Script_Behaviors>().restoreOldLights();
             setState(newState);
