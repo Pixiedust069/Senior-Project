@@ -8,6 +8,7 @@ using System.Collections;
 public class Script_Behaviors : MonoBehaviour 
 {
     GameObject _player; // The player's game object. This is used to get the player's transform.position for seeking the player.
+    GameObject _manager;// The GameManager game object. This lets us get to the player's score.
     
     float speed;        // The ghost's movement speed.
     float rotSpeed;     // The ghost's rotation speed.
@@ -25,8 +26,9 @@ public class Script_Behaviors : MonoBehaviour
 
     GameObject[] _searchTargets;// Array to access all the SearchTargets in the scene.
 
-    float lPulseColor;  // Variable to change the color of the point lights in a pulsing effect
-    float pulseTimer;   // Timer for the pulse effect
+    float lPulseColor;  // Variable to change the color of the point lights in a pulsing effect.
+    float pulseTimer;   // Timer for the pulse effect.
+    float candyTimer;   // Timer for the candy drop. Lets us keep this independent from the pulse effect.
     bool jumpLeft;      // Bool for checking if the ghost is jumping left or right.
     bool darken;        // Bool for checking if the pulse should be dark or bright.
 
@@ -41,6 +43,7 @@ public class Script_Behaviors : MonoBehaviour
         _lights = GameObject.FindGameObjectsWithTag("MainLight");               // Fill _lights with all the point lights in the scene.
         _searchTargets = GameObject.FindGameObjectsWithTag("SearchTarget");     // Fill _searchTargets with all the SearchTargets in the scene.
         _player = GameObject.FindGameObjectWithTag("Player");                   // Get the player game object.
+        _manager = GameObject.FindGameObjectWithTag("GameManager");             //
         
         velocity = new Vector3(0, 0, 0);    // Default value for velocity.
 
@@ -52,6 +55,7 @@ public class Script_Behaviors : MonoBehaviour
         jumpLeft = true;    
         darken = true;
         pulseTimer = 0.0f;
+        candyTimer = 0.0f;
 	}	
 
     public void idle()
@@ -181,8 +185,18 @@ public class Script_Behaviors : MonoBehaviour
                 jumpLeft = true;
             }
             // ********** //
+
+            
         }
 
+        if (candyTimer == 0.0f)
+        {
+            // Lower the players score as if the player was dropping candy due to fright.
+            if (_manager.GetComponent<Script_GUI>().score > 0)
+            {
+                _manager.GetComponent<Script_GUI>().score -= 10;
+            }
+        }
         
         // Timer to make the pulse effect feel right. Otherwise the effect would pulse by in less than a second.
         pulseTimer += Time.deltaTime;
@@ -192,6 +206,13 @@ public class Script_Behaviors : MonoBehaviour
             pulseTimer = 0.0f;
         }
         // ********** //
+
+        candyTimer += Time.deltaTime;
+
+        if (candyTimer > 1.0f)
+        {
+            candyTimer = 0.0f;
+        }
 
     }
 

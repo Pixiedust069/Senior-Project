@@ -74,6 +74,13 @@ public class Script_FSM : MonoBehaviour
             this.GetComponent<Script_Behaviors>().pickRandomPosition();
             setState(newState);
         }
+        // Transition from Scare to Chase
+        else if (curState == scare && newState == chase)
+        {
+            Debug.Log("Leaving Scare entering Chase");
+            this.GetComponent<Script_Behaviors>().restoreOldLights();
+            setState(newState);
+        }
     }
 
     // Decide which state we should be in and then execute it.
@@ -100,30 +107,30 @@ public class Script_FSM : MonoBehaviour
     }
 
     // Execute the states.
-    public void idleState()
+    void idleState()
     {
         //Debug.Log("Now in Idle");
         this.GetComponent<Script_Behaviors>().idle();
     }
 
-    public void searchState()
+    void searchState()
     {
         //Debug.Log("Now in Search");
         this.GetComponent<Script_Behaviors>().search();
     }
 
-    public void chaseState()
+    void chaseState()
     {
         //Debug.Log("Now in Chase");
         this.GetComponent<Script_Behaviors>().chase();
     }
 
-    public void dieState()
+    void dieState()
     {
         this.GetComponent<Script_Behaviors>().die();
     }
 
-    public void scareState()
+    void scareState()
     {
         this.GetComponent<Script_Behaviors>().scare();
     }

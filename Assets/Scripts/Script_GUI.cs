@@ -23,7 +23,7 @@ public class Script_GUI : MonoBehaviour
     Vector3[] pts = new Vector3[8]; // Array of Vector3's to hold the vertices of the bounds.
     Rect r; // Rect for the Highlight Gui box.
 
-    int score; // the current score.
+    public int score; // the current score.
 
     GameObject[] _candies;
     Transform scaleCandy;
