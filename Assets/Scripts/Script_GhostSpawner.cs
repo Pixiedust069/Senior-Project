@@ -1,6 +1,6 @@
 ﻿// Kenneth Gower
 // GSP 497
-// 2/8/2015
+// 2/20/2015
 
 /*This script will pick a random time and place to spawn a ghost.*/
 using UnityEngine;

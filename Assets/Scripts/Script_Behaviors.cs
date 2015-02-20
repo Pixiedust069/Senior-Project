@@ -1,6 +1,15 @@
 ﻿// Kenneth Gower
 // GSP 497
-// 2/15/2015
+// 2/20/2015
+
+/*Script contains all the Ghost AI behaviors.
+ * Idle bobs the ghost up and down in its spawn location.
+ * Search picks a random SearchTarget and moves the that location. After doing that 4 times it destroys the ghost if it hasn't found the player again and moved to the Chase or Scare state.
+ * Chase seeks the player's position.
+ * Scare pulses all the lights in the scene, darkens the renderer's ambient light, and lowers the player score by 1 candy value (currently 10) every second.
+ * 
+ * Contains several helper functions to facilitate the behaviors.
+ */
 
 using UnityEngine;
 using System.Collections;
@@ -35,6 +44,8 @@ public class Script_Behaviors : MonoBehaviour
     Color oldAmbientLight;  // Color variable to hold the original color of the Renderer's Ambient light. This way we can restore it later.
     Color oldPointLights;   // Color variable to hold the original color of the point lights. This way we can restore it later.
 
+    public bool subPoints;
+
 	// Use this for initialization
 	void Start () 
     {   
@@ -54,6 +65,7 @@ public class Script_Behaviors : MonoBehaviour
 
         jumpLeft = true;    
         darken = true;
+        subPoints = false;
         pulseTimer = 0.0f;
         candyTimer = 0.0f;
 	}	
@@ -195,8 +207,16 @@ public class Script_Behaviors : MonoBehaviour
             if (_manager.GetComponent<Script_GUI>().score > 0)
             {
                 _manager.GetComponent<Script_GUI>().score -= 10;
+                subPoints = true;
             }
         }
+        
+
+        if (candyTimer > 0.5f)
+        {
+            subPoints = false;
+        }
+        
         
         // Timer to make the pulse effect feel right. Otherwise the effect would pulse by in less than a second.
         pulseTimer += Time.deltaTime;
@@ -207,13 +227,16 @@ public class Script_Behaviors : MonoBehaviour
         }
         // ********** //
 
+        // Timer for the taking the candy points away from the player. 
         candyTimer += Time.deltaTime;
 
         if (candyTimer > 1.0f)
         {
             candyTimer = 0.0f;
         }
+        // ********** //
 
+        
     }
 
     public void dark()

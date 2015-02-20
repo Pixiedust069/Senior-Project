@@ -1,6 +1,8 @@
 ﻿// Kenneth Gower
 // GSP 497
-// 2/15/2015
+// 2/20/2015
+
+/*Main Ghost script. Interfaces with the Finite State Machine and Behaviors to control the Ghost.*/
 using UnityEngine;
 using System.Collections;
 

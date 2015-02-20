@@ -1,6 +1,8 @@
 ﻿// Kenneth Gower
 // GSP 497
-// 2/5/2015
+// 2/20/2015
+
+/* The Finite State Machine. Sets the current state, transitions between states, and executes the current state.*/
 using UnityEngine;
 using System.Collections;
 
@@ -69,6 +71,7 @@ public class Script_FSM : MonoBehaviour
         else if (curState == scare && newState == search)
         {
             Debug.Log("Leaving Scare entering Search");
+            this.GetComponent<Script_Behaviors>().subPoints = false;
             this.GetComponent<Script_Behaviors>().restoreOldLights();
             this.GetComponent<Script_Behaviors>().searchCount = 0;
             this.GetComponent<Script_Behaviors>().pickRandomPosition();
@@ -78,6 +81,7 @@ public class Script_FSM : MonoBehaviour
         else if (curState == scare && newState == chase)
         {
             Debug.Log("Leaving Scare entering Chase");
+            this.GetComponent<Script_Behaviors>().subPoints = false;
             this.GetComponent<Script_Behaviors>().restoreOldLights();
             setState(newState);
         }
