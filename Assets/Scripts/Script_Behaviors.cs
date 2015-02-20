@@ -21,30 +21,35 @@ public class Script_Behaviors : MonoBehaviour
     Vector3 searchPos;          // The position the ghost will move to during it's search behavior.
     public int searchCount;     // The count of how many times it's picked a serach position.
 
-    GameObject[] _lights;       // Array to access the all point lights in the test scene.
+    GameObject[] _lights;       // Array to access all the point lights in the scene.
 
-    float lPulseCount;
-    float pulseTimer;
-    bool jumpLeft;
-    bool darken;
+    GameObject[] _searchTargets;// Array to access all the SearchTargets in the scene.
 
-    Color oldAmbientLight;
-    Color oldPointLights;
+    float lPulseColor;  // Variable to change the color of the point lights in a pulsing effect
+    float pulseTimer;   // Timer for the pulse effect
+    bool jumpLeft;      // Bool for checking if the ghost is jumping left or right.
+    bool darken;        // Bool for checking if the pulse should be dark or bright.
+
+    Color oldAmbientLight;  // Color variable to hold the original color of the Renderer's Ambient light. This way we can restore it later.
+    Color oldPointLights;   // Color variable to hold the original color of the point lights. This way we can restore it later.
 
 	// Use this for initialization
 	void Start () 
-    {
+    {   
         Random.seed = (int)System.DateTime.Now.Ticks;
 
-        _lights = GameObject.FindGameObjectsWithTag("MainLight");
-        _player = GameObject.FindGameObjectWithTag("Player");
-        velocity = new Vector3(0, 0, 0);
-        speed = 3.0f;
-        rotSpeed = 1.5f;
-        up = true;
-        lPulseCount = 1.0f;
+        _lights = GameObject.FindGameObjectsWithTag("MainLight");               // Fill _lights with all the point lights in the scene.
+        _searchTargets = GameObject.FindGameObjectsWithTag("SearchTarget");     // Fill _searchTargets with all the SearchTargets in the scene.
+        _player = GameObject.FindGameObjectWithTag("Player");                   // Get the player game object.
+        
+        velocity = new Vector3(0, 0, 0);    // Default value for velocity.
 
-        jumpLeft = true;
+        speed = 3.0f;       // The movement speed of the ghost.
+        rotSpeed = 1.5f;    // The rotation speed of the ghost.
+        up = true;          // Set up to true for start. We know at spawn the ghost will at the bottom position so should float upward.
+        lPulseColor = 1.0f; // Set pulse color to start at 1. We'll start bright then work down to darkness in the pulse effect.
+
+        jumpLeft = true;    
         darken = true;
         pulseTimer = 0.0f;
 	}	
@@ -85,16 +90,15 @@ public class Script_Behaviors : MonoBehaviour
     public void pickRandomPosition()
     {
         // Pick random positions for the Search behavior.
-        float newX = this.transform.position.x + Random.Range(2.0f, 5.0f);
-        float newZ = this.transform.position.z + Random.Range(2.0f, 5.0f);
-
-        searchPos = new Vector3(newX, transform.position.y, newZ); 
+        int i = (int)Random.Range(0, _searchTargets.Length);
+        searchPos = _searchTargets[i].transform.position;
     }
 
     public void search()
     {
         // Seek to the search position
         velocity = searchPos - this.transform.position;
+        Debug.Log("Seeking position: " + searchPos);
 
         velocity.Normalize();
         velocity *= speed;
@@ -193,15 +197,15 @@ public class Script_Behaviors : MonoBehaviour
 
     public void dark()
     {
-        Debug.Log("In Dark()");
-        lPulseCount -= 0.05f;       
+        // Subtract from lPulseColor then loop through every light in the scene setting the new color.
+        lPulseColor -= 0.05f;       
         for (int i = 0; i < _lights.Length; i++)
         {
-            _lights[i].light.color = new Color(lPulseCount, lPulseCount, lPulseCount, lPulseCount);
-            Debug.Log("lPulseCount Started at 1.0: " + _lights[i].light.color.ToString());
+            _lights[i].light.color = new Color(lPulseColor, lPulseColor, lPulseColor, lPulseColor);
         }
-        
-        if (lPulseCount < 0.05f)
+
+        // If it's gotten dark enough, switch and start to brighten the lights instead.
+        if (lPulseColor < 0.05f)
         {
             darken = false;
         }
@@ -209,16 +213,15 @@ public class Script_Behaviors : MonoBehaviour
 
     public void bright()
     {
-        Debug.Log("In Bright()");
-        lPulseCount += 0.05f;
-        
+        // Add to lPulseColor then loop through every light in the scene setting the new color.
+        lPulseColor += 0.05f;        
         for (int i = 0; i < _lights.Length; i++)
         {
-            _lights[i].light.color = new Color(lPulseCount, lPulseCount, lPulseCount, lPulseCount);
-            Debug.Log("lPulseCount Started at 0.05: " + _lights[i].light.color.ToString());
+            _lights[i].light.color = new Color(lPulseColor, lPulseColor, lPulseColor, lPulseColor);
         }
 
-        if (lPulseCount > 1.0f)
+        // If it's gotten bright enough, switch and start to darken instead.
+        if (lPulseColor > 1.0f)
         {
             darken = true;
         }
@@ -227,14 +230,16 @@ public class Script_Behaviors : MonoBehaviour
 
     public void saveOldLights()
     {
-        oldAmbientLight = RenderSettings.ambientLight;
-        oldPointLights = _lights[0].light.color;
+        oldAmbientLight = RenderSettings.ambientLight;  // Save the original AmbientLight color for later use.
+        oldPointLights = _lights[0].light.color;        // Save the original Point Light color for later use. Since all the lights in our scene use the same color this one variable is enough.
     }
 
     public void restoreOldLights()
     {
-        RenderSettings.ambientLight = oldAmbientLight;
+        RenderSettings.ambientLight = oldAmbientLight;  // Set the AmbientLight back to its original color.
 
+
+        // Loop through all the Point Lights and set them to their original color.
         for (int i = 0; i < _lights.Length; i++)
         {
             _lights[i].light.color = oldPointLights;

@@ -55,12 +55,14 @@ public class Script_FSM : MonoBehaviour
         else if (curState == search && newState == die)
         {
             Debug.Log("Leaving Search entering Die");
+            this.GetComponent<Script_Behaviors>().searchCount = 0;
             setState(newState);
         }
         // Transition from Search to Chase.
         else if (curState == search && newState == chase)
         {
             Debug.Log("Leaving Search entering Chase");
+            this.GetComponent<Script_Behaviors>().searchCount = 0;
             setState(newState);
         }
         // Transition from Scare to Search
@@ -68,6 +70,8 @@ public class Script_FSM : MonoBehaviour
         {
             Debug.Log("Leaving Scare entering Search");
             this.GetComponent<Script_Behaviors>().restoreOldLights();
+            this.GetComponent<Script_Behaviors>().searchCount = 0;
+            this.GetComponent<Script_Behaviors>().pickRandomPosition();
             setState(newState);
         }
     }
