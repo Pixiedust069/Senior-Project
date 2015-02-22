@@ -28,10 +28,14 @@ public class Script_GUI : MonoBehaviour
 
     GameObject _ghost;
 
+    bool addPoints;
+    float pointTimer;
+
     void Start()
     {
         timer = 900.0f; // Set the countdown timer to start at 300 seconds. This is for ease of testing, it can be changed for normal gameplay.
         gameOver = false;
+        addPoints = false;
         score = 0;       
     }
 
@@ -71,27 +75,47 @@ public class Script_GUI : MonoBehaviour
                 {
                     Destroy(hit.transform.gameObject);
                     score += 10;
+                    addPoints = true;
+                    pointTimer = 0.0f;
                 }                
             }
         }        
-        // ++++++++++++++++++++ //           
+        // ++++++++++++++++++++ //
+
+        // If a candy has been picked up, start the timer.
+        if (addPoints)
+        {
+            pointTimer += Time.deltaTime;
+
+            // If the timer is more than the limit, stop printing the new points gained.
+            if (pointTimer > 0.5f)
+            {
+                addPoints = false;
+            }
+        }
+        // ++++++++++++++++++++ //
     }
 
+    // Scale the candy piece up as it's the target under the reticle.
     void scaleCandyUp(Transform candy)
     {
-        scaleCandy = candy;
-        oldCandyScale = candy.transform.localScale;
-        oldCandyColor = candy.renderer.material.color;
-        Debug.Log(oldCandyColor);
-        candy.transform.localScale = new Vector3(candy.transform.localScale.x + 0.05f, candy.transform.localScale.y + 0.05f, candy.transform.localScale.z + 0.05f);
-        candy.renderer.material.color = new Color(1.0f, 1.0f, 0.0f, 1.0f);
+        scaleCandy = candy; // Set scaleCandy outside the Raycast if statement.
+        oldCandyScale = candy.transform.localScale;     // Save the original candy scale.
+        oldCandyColor = candy.renderer.material.color;  // Save the original candy color.
+        candy.transform.localScale = new Vector3(candy.transform.localScale.x + 0.05f, 
+                                                 candy.transform.localScale.y + 0.05f, 
+                                                 candy.transform.localScale.z + 0.05f); // Scale the candy pice up by 0.05f.
+        candy.renderer.material.color = new Color(1.0f, 1.0f, 0.0f, 1.0f);  // Change the material color to yellow so it's mor obvious when we're targeting the candy bars.
     }
+    // ++++++++++++++++++++ //
 
+    // Restore the candy to it's normal size.
     void scaleCandyDown(Transform candy)
     {
         candy.transform.localScale = oldCandyScale;
         candy.renderer.material.color = oldCandyColor;
     }
+    // ++++++++++++++++++++ //
 
     void OnGUI()
     {
@@ -121,8 +145,15 @@ public class Script_GUI : MonoBehaviour
             {
                 if (_ghost.gameObject.GetComponent<Script_Behaviors>().subPoints)
                 {
-                    GUI.Label(new Rect((Screen.width / 2), (Screen.height / 2 + 30), 100, 20), "-10");
+                    GUI.Label(new Rect((Screen.width / 2), (Screen.height / 2 - 30), 100, 20), "-10");
                 }
+            }
+            // ++++++++++++++++++++ //
+
+            // Display the points a player gets over the reticle after picking up candy.
+            if (addPoints)
+            {
+                GUI.Label(new Rect((Screen.width / 2), (Screen.height / 2 - 30), 100, 20), "+10");
             }
             // ++++++++++++++++++++ //
         }
