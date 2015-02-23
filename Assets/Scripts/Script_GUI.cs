@@ -44,7 +44,6 @@ public class Script_GUI : MonoBehaviour
     {
         timer -= Time.deltaTime; // Subtract using time.deltaTime, the same concept as in the Timer.cs, but backwards since we're counting down.
 
-        Debug.Log("Vec3.up: " + Vector3.up);
         _ghost = GameObject.FindGameObjectWithTag("Ghost");
 
         // Populate _candies with every candy object. As candies are grabbed by the player they will be removed from _candies.
