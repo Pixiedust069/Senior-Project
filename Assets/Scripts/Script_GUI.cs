@@ -15,6 +15,7 @@ using System.Collections;
 
 public class Script_GUI : MonoBehaviour 
 {
+    public Font fontLarge;
     public Texture reticle; // Our reticle to guide the player, this way the player knows where the center of the screen is.
     float timer; // Variable for the GUI countdown timer.
     bool gameOver; // Bool so we can print the main HUD only if the game is not over.
@@ -120,6 +121,8 @@ public class Script_GUI : MonoBehaviour
     {
         if (!gameOver)
         {
+            GUI.skin.font = fontLarge; // Set the font for the GUI elements.
+
             // The reticle in the center of the screen.
             if (!reticle)
             {
@@ -131,11 +134,11 @@ public class Script_GUI : MonoBehaviour
             // ++++++++++++++++++++ //
 
             // The countdown timer
-            GUI.Label(new Rect(10, 10, 100, 20), "Time Left: " + timer.ToString("N0"));
+            GUI.Label(new Rect(10, 10, 200, 40), "Time Left: " + timer.ToString("N0"));
             // ++++++++++++++++++++ //
 
             // Score counter
-            GUI.Label(new Rect(10, 30, 100, 20), "Score: " + score.ToString());
+            GUI.Label(new Rect(10, 50, 150, 40), "Score: " + score.ToString());
             // ++++++++++++++++++++ //
 
 
@@ -144,7 +147,7 @@ public class Script_GUI : MonoBehaviour
             {
                 if (_ghost.gameObject.GetComponent<Script_Behaviors>().subPoints)
                 {
-                    GUI.Label(new Rect((Screen.width / 2), (Screen.height / 2 - 30), 100, 20), "-10");
+                    GUI.Label(new Rect((Screen.width / 2), (Screen.height / 2 - 50), 100, 40), "-10");
                 }
             }
             // ++++++++++++++++++++ //
@@ -152,7 +155,7 @@ public class Script_GUI : MonoBehaviour
             // Display the points a player gets over the reticle after picking up candy.
             if (addPoints)
             {
-                GUI.Label(new Rect((Screen.width / 2), (Screen.height / 2 - 30), 100, 20), "+10");
+                GUI.Label(new Rect((Screen.width / 2), (Screen.height / 2 - 50), 100, 40), "+10");
             }
             // ++++++++++++++++++++ //
         }
@@ -161,8 +164,8 @@ public class Script_GUI : MonoBehaviour
         if (timer < 0.1)
         {
             gameOver = true;
-            GUI.Label(new Rect((Screen.width / 2), (Screen.height / 2), 100, 20), "Game Over");
-            GUI.Label(new Rect((Screen.width / 2), ((Screen.height / 2) + 30), 100, 20), "Final Score: " + score.ToString());
+            GUI.Label(new Rect((Screen.width / 2 - 75), (Screen.height / 2), 250, 40), "Game Over");
+            GUI.Label(new Rect((Screen.width / 2 - 115), ((Screen.height / 2) + 50), 250, 40), "Final Score: " + score.ToString());
         }
         // ++++++++++++++++++++ //
 
@@ -173,9 +176,11 @@ public class Script_GUI : MonoBehaviour
             Time.timeScale = 0;
             RenderSettings.ambientLight = Color.black;
 
-            GUI.Label(new Rect((Screen.width / 2), (Screen.height / 2) - 30, 500, 20), "Congratulations! You got all the candy!");
-            GUI.Label(new Rect((Screen.width / 2), (Screen.height / 2), 100, 20), "Game Over");
-            GUI.Label(new Rect((Screen.width / 2), ((Screen.height / 2) + 30), 100, 20), "Final Score: " + score.ToString());
+            GUI.Label(new Rect((Screen.width / 2 - 250), (Screen.height / 2) - 50, 500, 50), "Congratulations! You got all the candy!");
+            GUI.Label(new Rect((Screen.width / 2 - 75), (Screen.height / 2), 150, 40), "Game Over");
+            GUI.Label(new Rect((Screen.width / 2 - 115), ((Screen.height / 2) + 50), 250, 40), "Score: " + score);
+            GUI.Label(new Rect((Screen.width / 2 - 115), ((Screen.height / 2) + 100), 250, 40), "Time Bonus: " + (int)timer);
+            GUI.Label(new Rect((Screen.width / 2 - 115), ((Screen.height / 2) + 150), 250, 40), "Final Score: " + (score + (int)timer));
         }
     }
 }

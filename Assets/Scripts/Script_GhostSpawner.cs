@@ -22,15 +22,10 @@ public class Script_GhostSpawner : MonoBehaviour
         // Seed the random number generator.
         Random.seed = (int)System.DateTime.Now.Ticks;
 
-        // Pick a random time for the ghost to spawn.
-        ghostTimer = Random.Range(1.0f, 30.0f);
-
         // Put all GameObjects tagged "GhostSpawn into the array _ghostSpawns.
         _ghostSpawns = GameObject.FindGameObjectsWithTag("GhostSpawn");
 
         hasSpawned = false;
-
-        print(ghostTimer);
 	}
 	
 	// Update is called once per frame
@@ -46,7 +41,6 @@ public class Script_GhostSpawner : MonoBehaviour
         }
         
         timer += Time.deltaTime;
-
 
         //spawn ghost
         if (timer > ghostTimer && !hasSpawned)

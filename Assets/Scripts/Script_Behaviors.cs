@@ -233,11 +233,16 @@ public class Script_Behaviors : MonoBehaviour
         if (candyTimer > 1.0f)
         {
             candyTimer = 0.0f;
-            _manager.GetComponent<Script_CandySpray>().destroyCandy();
+            destroyCandy();
         }
         // ********** //
         Debug.Log("Candy Timer: " + candyTimer);
         
+    }
+
+    public void destroyCandy()
+    {
+        _manager.GetComponent<Script_CandySpray>().destroyCandy();
     }
 
     public void dark()
