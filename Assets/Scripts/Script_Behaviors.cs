@@ -46,6 +46,11 @@ public class Script_Behaviors : MonoBehaviour
 
     public bool subPoints;
 
+    public AudioClip ghostSound;
+    public AudioClip dieSound;
+    float soundDelay;
+    float soundTimer;
+
 	// Use this for initialization 
 	void Start () 
     {   
@@ -68,7 +73,10 @@ public class Script_Behaviors : MonoBehaviour
         subPoints = false;
         pulseTimer = 0.0f;
         candyTimer = 0.0f;
-	}	
+
+        soundTimer = 0.0f;
+        soundDelay = Random.Range(5.0f, 10.0f) + soundTimer;
+	}
 
     public void idle()
     {
@@ -159,7 +167,9 @@ public class Script_Behaviors : MonoBehaviour
     public void die()
     {
         // Destroy the ghost.
-        Destroy(this.gameObject);
+        audio.Stop();
+        playSound(dieSound);
+        Destroy(this.gameObject);        
     }
 
     public void scare()
@@ -293,6 +303,27 @@ public class Script_Behaviors : MonoBehaviour
         for (int i = 0; i < _lights.Length; i++)
         {
             _lights[i].light.color = oldPointLights;
+        }
+    }
+
+    void playSound(AudioClip clip)
+    {
+        soundDelay = Random.Range(5.0f, 10.0f) + soundTimer;    // Pick a random time to delay the next ghost sound play.
+
+        // Play the sound.
+        audio.clip = clip;
+        audio.volume = 0.5f;
+        audio.Play();
+    }
+
+    void Update()
+    {
+        soundTimer += Time.deltaTime;   // Start the soundTimer.
+        
+        // If we have reached the time of the sound delay, play the ghost sound effect.
+        if ((int)soundTimer == (int)soundDelay)
+        {
+            playSound(ghostSound);
         }
     }
 }
