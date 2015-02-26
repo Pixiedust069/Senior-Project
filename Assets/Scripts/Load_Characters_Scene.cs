@@ -6,5 +6,7 @@ public class Load_Characters_Scene : MonoBehaviour {
 	public void LoadScene (int level)
 	{
 		Application.LoadLevel (level);
-	}
+
+		}
+				
 }

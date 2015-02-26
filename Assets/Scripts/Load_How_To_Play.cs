@@ -7,4 +7,12 @@ public class Load_How_To_Play : MonoBehaviour {
 	{
 		Application.LoadLevel (level);
 		}
+
+	public void Update ()
+	{
+		int level;
+		if (Input.GetKey ("escape")) {
+			Application.LoadLevel(0);
+		}
+	}
 }

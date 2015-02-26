@@ -63,5 +63,12 @@ public class Script_Timer : MonoBehaviour
             }
             Time.timeScale = 0;
         }
+		
+			int level;
+			if (Input.GetKey ("escape"))
+		{
+				Application.LoadLevel(5);
+			}
+
     }
 }
