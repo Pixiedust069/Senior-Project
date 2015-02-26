@@ -34,7 +34,7 @@ public class Script_GUI : MonoBehaviour
 
     void Start()
     {
-        timer = 900.0f; // Set the countdown timer to start at 300 seconds. This is for ease of testing, it can be changed for normal gameplay.
+        timer = 120.0f; // Set the countdown timer to start at 300 seconds. This is for ease of testing, it can be changed for normal gameplay.
         gameOver = false;
         addPoints = false;
         score = 0;       
@@ -102,9 +102,9 @@ public class Script_GUI : MonoBehaviour
         scaleCandy = candy; // Set scaleCandy outside the Raycast if statement.
         oldCandyScale = candy.transform.localScale;     // Save the original candy scale.
         oldCandyColor = candy.renderer.material.color;  // Save the original candy color.
-        candy.transform.localScale = new Vector3(candy.transform.localScale.x + 0.05f, 
-                                                 candy.transform.localScale.y + 0.05f, 
-                                                 candy.transform.localScale.z + 0.05f); // Scale the candy pice up by 0.05f.
+        candy.transform.localScale = new Vector3(candy.transform.localScale.x + 0.075f, 
+                                                 candy.transform.localScale.y + 0.075f, 
+                                                 candy.transform.localScale.z + 0.075f); // Scale the candy pice up by 0.05f.
         candy.renderer.material.color = new Color(1.0f, 1.0f, 0.0f, 1.0f);  // Change the material color to yellow so it's mor obvious when we're targeting the candy bars.
     }
     // ++++++++++++++++++++ //

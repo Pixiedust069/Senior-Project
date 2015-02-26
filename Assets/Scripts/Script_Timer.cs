@@ -31,7 +31,7 @@ public class Script_Timer : MonoBehaviour
         
         // The countdown timer is set for 30 seconds. This is for ease of testing, it can be increased for normal gameplay.
         // I want to try and add a pulsating effect rather just a static dimming.
-        if (timer > 300.0f && timer < 600.0f)
+        if (timer > 60.0f && timer < 90.0f)
         {
             // After ten seconds have passed change the color of the renderer's ambient light settings and
             // the point light. This will make the scene darker.
@@ -43,7 +43,7 @@ public class Script_Timer : MonoBehaviour
             
         }
 
-        else if (timer > 600.0f && timer < 900.0f)
+        else if (timer > 90.0f && timer < 120.0f)
         {
             // After twenty seconds make the renderer's abient light and the point light even darker.
             RenderSettings.ambientLight = new Color(0.08f, 0.08f, 0.08f, 1.0f);
@@ -53,7 +53,7 @@ public class Script_Timer : MonoBehaviour
             }
         }
 
-        else if (timer > 900.0f)
+        else if (timer > 120.0f)
         {
             // After thirty seconds turn everything black, and stop the game.
             RenderSettings.ambientLight = Color.black;
