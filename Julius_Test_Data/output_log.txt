@@ -16,7 +16,7 @@ Platform assembly: L:\Users\Kenyata 2\Documents\GitHub\Senior-Project\Julius_Tes
 Loading L:\Users\Kenyata 2\Documents\GitHub\Senior-Project\Julius_Test_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
 Platform assembly: L:\Users\Kenyata 2\Documents\GitHub\Senior-Project\Julius_Test_Data\Managed\UnityEngine.UI.dll (this message is harmless)
 Loading L:\Users\Kenyata 2\Documents\GitHub\Senior-Project\Julius_Test_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-- Completed reload, in  0.292 seconds
+- Completed reload, in  0.095 seconds
 desktop: 1600x900 60Hz; virtual: 1600x900 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
@@ -26,20 +26,51 @@ The referenced script on this Behaviour is missing!
  
 (Filename:  Line: 1788)
 
-UnloadTime: 3.519984 ms
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+UnloadTime: 3.233267 ms
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 
-Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 2461.
-Total: 1934.008911 ms (FindLiveObjects: 0.126080 ms CreateObjectMapping: 0.020546 ms MarkObjects: 0.221808 ms  DeleteObjects: 0.019612 ms)
+Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 170.
+Total: 0.729399 ms (FindLiveObjects: 0.022881 ms CreateObjectMapping: 0.007938 ms MarkObjects: 0.144292 ms  DeleteObjects: 0.015409 ms)
 
-Platform assembly: L:\Users\Kenyata 2\Documents\GitHub\Senior-Project\Julius_Test_Data\Managed\Boo.Lang.dll (this message is harmless)
 The referenced script on this Behaviour is missing!
  
 (Filename:  Line: 1788)
 
-UnloadTime: 6.586544 ms
-Unloading 3 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+UnloadTime: 0.726597 ms
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 
-Unloading 351 unused Assets to reduce memory usage. Loaded Objects now: 199.
-Total: 9.758172 ms (FindLiveObjects: 0.018211 ms CreateObjectMapping: 0.014008 ms MarkObjects: 0.187720 ms  DeleteObjects: 8.996085 ms)
+Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 210.
+Total: 0.705584 ms (FindLiveObjects: 0.008405 ms CreateObjectMapping: 0.008405 ms MarkObjects: 0.179314 ms  DeleteObjects: 0.014475 ms)
+
+UnloadTime: 0.683637 ms
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 189.
+Total: 0.687839 ms (FindLiveObjects: 0.007471 ms CreateObjectMapping: 0.008405 ms MarkObjects: 0.155966 ms  DeleteObjects: 0.011674 ms)
+
+The referenced script on this Behaviour is missing!
+ 
+(Filename:  Line: 1788)
+
+UnloadTime: 0.434744 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 6 unused Assets to reduce memory usage. Loaded Objects now: 210.
+Total: 0.694844 ms (FindLiveObjects: 0.008405 ms CreateObjectMapping: 0.008405 ms MarkObjects: 0.188653 ms  DeleteObjects: 0.018211 ms)
+
+UnloadTime: 0.525335 ms
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 214.
+Total: 0.692509 ms (FindLiveObjects: 0.008872 ms CreateObjectMapping: 0.008405 ms MarkObjects: 0.181182 ms  DeleteObjects: 0.012141 ms)
+
+The referenced script on this Behaviour is missing!
+ 
+(Filename:  Line: 1788)
+
+UnloadTime: 0.593512 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 210.
+Total: 0.693910 ms (FindLiveObjects: 0.008405 ms CreateObjectMapping: 0.008405 ms MarkObjects: 0.195191 ms  DeleteObjects: 0.012608 ms)
 
