@@ -102,6 +102,18 @@ public class Script_GUI : MonoBehaviour
             }
         }
         // ++++++++++++++++++++ //
+
+        if (gameOver)
+        {
+            this.gameObject.GetComponent<Script_Timer>().canDimLights = false;
+
+            RenderSettings.ambientLight = Color.black;
+
+            for (int i = 0; i < _lights.Length; i++)
+            {
+                _lights[i].light.color = Color.black;
+            }  
+        }
     }
 
     // Scale the candy piece up as it's the target under the reticle.
@@ -183,15 +195,7 @@ public class Script_GUI : MonoBehaviour
         // Game over win text
         if (_candies.Length == 0)
         {
-            gameOver = true;
-            this.gameObject.GetComponent<Script_Timer>().canDimLights = false;
-
-            RenderSettings.ambientLight = Color.black; 
-           
-            for (int i = 0; i < _lights.Length; i++)
-            {
-                _lights[i].light.color = Color.black;
-            }            
+            gameOver = true;                      
 
             GUI.Label(new Rect((Screen.width / 2 - 250), (Screen.height / 2) - 50, 500, 50), "Congratulations! You got all the candy!");
             GUI.Label(new Rect((Screen.width / 2 - 75), (Screen.height / 2), 150, 40), "Game Over");
