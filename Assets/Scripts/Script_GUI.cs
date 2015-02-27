@@ -28,6 +28,7 @@ public class Script_GUI : MonoBehaviour
     Color oldCandyColor;
 
     GameObject _ghost;
+    GameObject[] _lights;
 
     bool addPoints;
     float pointTimer;
@@ -38,6 +39,7 @@ public class Script_GUI : MonoBehaviour
     void Start()
     {
         Random.seed = (int)System.DateTime.Now.Ticks;
+        _lights = GameObject.FindGameObjectsWithTag("MainLight");
         timer = 120.0f; // Set the countdown timer to start at 300 seconds. This is for ease of testing, it can be changed for normal gameplay.
         gameOver = false;
         addPoints = false;
@@ -182,19 +184,22 @@ public class Script_GUI : MonoBehaviour
         if (_candies.Length == 0)
         {
             gameOver = true;
-            Time.timeScale = 0;
-            RenderSettings.ambientLight = Color.black;
-            GameObject[] _lights = GameObject.FindGameObjectsWithTag("MainLight");
+            this.gameObject.GetComponent<Script_Timer>().canDimLights = false;
+
+            RenderSettings.ambientLight = Color.black; 
+           
             for (int i = 0; i < _lights.Length; i++)
             {
                 _lights[i].light.color = Color.black;
-            }
+            }            
 
             GUI.Label(new Rect((Screen.width / 2 - 250), (Screen.height / 2) - 50, 500, 50), "Congratulations! You got all the candy!");
             GUI.Label(new Rect((Screen.width / 2 - 75), (Screen.height / 2), 150, 40), "Game Over");
             GUI.Label(new Rect((Screen.width / 2 - 115), ((Screen.height / 2) + 50), 250, 40), "Score: " + score);
             GUI.Label(new Rect((Screen.width / 2 - 115), ((Screen.height / 2) + 100), 250, 40), "Time Bonus: " + (int)timer);
             GUI.Label(new Rect((Screen.width / 2 - 115), ((Screen.height / 2) + 150), 250, 40), "Final Score: " + (score + (int)timer));
+
+            Time.timeScale = 0;
         }
         // ++++++++++++++++++++ //
     }
