@@ -32,8 +32,12 @@ public class Script_GUI : MonoBehaviour
     bool addPoints;
     float pointTimer;
 
+    public AudioSource candySource; // Second audio source so that these sound effects don't stop the background music.
+    public AudioClip[] candyClips;  // Array to hold all the candy sounds.
+
     void Start()
     {
+        Random.seed = (int)System.DateTime.Now.Ticks;
         timer = 120.0f; // Set the countdown timer to start at 300 seconds. This is for ease of testing, it can be changed for normal gameplay.
         gameOver = false;
         addPoints = false;
@@ -77,6 +81,8 @@ public class Script_GUI : MonoBehaviour
                     score += 10;
                     addPoints = true;
                     pointTimer = 0.0f;
+                    candySource.clip = candyClips[0]; // Set the AudioClip to the pickup sound.
+                    candySource.Play(); // Play the audio clip.
                 }                
             }
         }        
@@ -147,7 +153,10 @@ public class Script_GUI : MonoBehaviour
             {
                 if (_ghost.gameObject.GetComponent<Script_Behaviors>().subPoints)
                 {
+                    int randSound = (int)Random.Range(1.0f, 6.0f);
                     GUI.Label(new Rect((Screen.width / 2), (Screen.height / 2 - 50), 100, 40), "-10");
+                    candySource.clip = candyClips[randSound]; // Pick a random candy drop sound to play and set it as the AudioClip.
+                    candySource.Play();
                 }
             }
             // ++++++++++++++++++++ //
@@ -175,6 +184,11 @@ public class Script_GUI : MonoBehaviour
             gameOver = true;
             Time.timeScale = 0;
             RenderSettings.ambientLight = Color.black;
+            GameObject[] _lights = GameObject.FindGameObjectsWithTag("MainLight");
+            for (int i = 0; i < _lights.Length; i++)
+            {
+                _lights[i].light.color = Color.black;
+            }
 
             GUI.Label(new Rect((Screen.width / 2 - 250), (Screen.height / 2) - 50, 500, 50), "Congratulations! You got all the candy!");
             GUI.Label(new Rect((Screen.width / 2 - 75), (Screen.height / 2), 150, 40), "Game Over");
@@ -182,5 +196,6 @@ public class Script_GUI : MonoBehaviour
             GUI.Label(new Rect((Screen.width / 2 - 115), ((Screen.height / 2) + 100), 250, 40), "Time Bonus: " + (int)timer);
             GUI.Label(new Rect((Screen.width / 2 - 115), ((Screen.height / 2) + 150), 250, 40), "Final Score: " + (score + (int)timer));
         }
+        // ++++++++++++++++++++ //
     }
 }

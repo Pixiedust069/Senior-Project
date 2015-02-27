@@ -14,13 +14,19 @@ public class Script_Timer : MonoBehaviour
     float timer; // variable for our timer.
     GameObject[] _lights; // Array to access the all point lights in the test scene. 
 
+    public bool canDimLights;
+
    
     // Use this for initialization
     void Start()
     {
+        Screen.showCursor = false;
+
         timer = 0.0f;
 
         _lights = GameObject.FindGameObjectsWithTag("MainLight");
+
+        canDimLights = true;
         
     }
 
@@ -28,6 +34,7 @@ public class Script_Timer : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
+
         
         // The countdown timer is set for 30 seconds. This is for ease of testing, it can be increased for normal gameplay.
         // I want to try and add a pulsating effect rather just a static dimming.
@@ -36,9 +43,13 @@ public class Script_Timer : MonoBehaviour
             // After ten seconds have passed change the color of the renderer's ambient light settings and
             // the point light. This will make the scene darker.
             RenderSettings.ambientLight = new Color(0.18f, 0.18f, 0.18f, 1.0f);
-            for (int i = 0; i < _lights.Length; i++)
+            if (canDimLights)
             {
-                _lights[i].light.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
+                for (int i = 0; i < _lights.Length; i++)
+                {
+                    //_lights[i].light.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
+                    _lights[i].light.color = new Color(0.56f, 0.30f, 0.06f, 1.0f);
+                }
             }
             
         }
@@ -47,9 +58,13 @@ public class Script_Timer : MonoBehaviour
         {
             // After twenty seconds make the renderer's abient light and the point light even darker.
             RenderSettings.ambientLight = new Color(0.08f, 0.08f, 0.08f, 1.0f);
-            for (int i = 0; i < _lights.Length; i++)
+            if (canDimLights)
             {
-                _lights[i].light.color = new Color(0.25f, 0.25f, 0.25f, 1.0f);
+                for (int i = 0; i < _lights.Length; i++)
+                {
+                    //_lights[i].light.color = new Color(0.25f, 0.25f, 0.25f, 1.0f);
+                    _lights[i].light.color = new Color(0.29f, 0.15f, 0.03f, 1.0f);
+                }
             }
         }
 
@@ -67,8 +82,9 @@ public class Script_Timer : MonoBehaviour
 			int level;
 			if (Input.GetKey ("escape"))
 		{
+            Screen.showCursor = true;
 				Application.LoadLevel(5);
-			}
+		}
 
     }
 }

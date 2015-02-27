@@ -66,7 +66,6 @@ public class Script_Ghost : MonoBehaviour
         {
             if (distanceToPlayer > 4.0f)
             {
-                Debug.Log("Entering Chase");
                 curState = chase;
                 this.gameObject.GetComponent<Script_FSM>().stateTransition(curState);
             }
@@ -74,7 +73,6 @@ public class Script_Ghost : MonoBehaviour
             // If the ghost is close to the player change to the Scare state;
             if (distanceToPlayer < 4.0f)
             {
-                Debug.Log("Entering Scare");
                 curState = scare;
                 this.gameObject.GetComponent<Script_FSM>().stateTransition(curState);
             }
@@ -96,7 +94,6 @@ public class Script_Ghost : MonoBehaviour
             // the player then change to the Die state.
             else if (curState == search)
             {
-                Debug.Log("Script_Ghost value of searchCount: " + this.GetComponent<Script_Behaviors>().searchCount);
                 if (this.GetComponent<Script_Behaviors>().searchCount == 4)
                 {
                     curState = die;

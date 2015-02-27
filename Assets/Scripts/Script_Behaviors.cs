@@ -44,12 +44,13 @@ public class Script_Behaviors : MonoBehaviour
     Color oldAmbientLight;  // Color variable to hold the original color of the Renderer's Ambient light. This way we can restore it later.
     Color oldPointLights;   // Color variable to hold the original color of the point lights. This way we can restore it later.
 
-    public bool subPoints;
+    public bool subPoints;  // Bool to tell Script_UI that points should be taken from the player.
 
-    public AudioClip ghostSound;
-    public AudioClip dieSound;
-    float soundDelay;
-    float soundTimer;
+    public AudioClip ghostSound;    // Ghost default AudioClip, needs to be set in the Inspector.
+    public AudioClip dieSound;      // Ghost death AudioClip, needs to be set in the Inspector.
+    float soundDelay;   // Delay between playing the sound.
+    float soundTimer;   // Timer for counting down to the sound delay.
+
 
 	// Use this for initialization 
 	void Start () 
@@ -59,7 +60,7 @@ public class Script_Behaviors : MonoBehaviour
         _lights = GameObject.FindGameObjectsWithTag("MainLight");               // Fill _lights with all the point lights in the scene.
         _searchTargets = GameObject.FindGameObjectsWithTag("SearchTarget");     // Fill _searchTargets with all the SearchTargets in the scene.
         _player = GameObject.FindGameObjectWithTag("Player");                   // Get the player game object.
-        _manager = GameObject.FindGameObjectWithTag("GameManager");             //
+        _manager = GameObject.FindGameObjectWithTag("GameManager");             // Get the game manager game object for access to Script_Timer and Script_GUI.
         
         velocity = new Vector3(0, 0, 0);    // Default value for velocity.
 
@@ -68,7 +69,7 @@ public class Script_Behaviors : MonoBehaviour
         up = true;          // Set up to true for start. We know at spawn the ghost will at the bottom position so should float upward.
         lPulseColor = 1.0f; // Set pulse color to start at 1. We'll start bright then work down to darkness in the pulse effect.
 
-        jumpLeft = true;    
+        //jumpLeft = true;    
         darken = true;
         subPoints = false;
         pulseTimer = 0.0f;
@@ -102,6 +103,7 @@ public class Script_Behaviors : MonoBehaviour
             up = true;
             newPos = tmpPos;
         }
+        // ********** //
     }
 
     public void getIdlePositions()
@@ -122,7 +124,6 @@ public class Script_Behaviors : MonoBehaviour
     {
         // Seek to the search position
         velocity = searchPos - this.transform.position;
-        Debug.Log("Seeking position: " + searchPos);
 
         velocity.Normalize();
         velocity *= speed;
@@ -141,7 +142,6 @@ public class Script_Behaviors : MonoBehaviour
         {
             searchCount++;
             pickRandomPosition();
-            Debug.Log(searchPos);
         }
         // ********** //
     }
@@ -174,8 +174,6 @@ public class Script_Behaviors : MonoBehaviour
 
     public void scare()
     {
-        RenderSettings.ambientLight = new Color(0.08f, 0.08f, 0.08f, 1.0f);
-
         // Rotate to face the player
         Quaternion targetRotation = Quaternion.LookRotation(_player.transform.position - this.transform.position);
         float rSpeed = (rotSpeed * Time.deltaTime);
@@ -196,19 +194,17 @@ public class Script_Behaviors : MonoBehaviour
             // ********** //
 
             // Jump to the left and right in a 'freaky' manner
-            if (jumpLeft)
-            {
-                this.transform.position = new Vector3((this.transform.position.x), this.transform.position.y, this.transform.position.z - 0.5f);
-                jumpLeft = false;
-            }
-            else
-            {
-                this.transform.position = new Vector3((this.transform.position.x), this.transform.position.y, this.transform.position.z + 0.5f);
-                jumpLeft = true;
-            }
-            // ********** //
-
-            
+            //if (jumpLeft)
+            //{
+            //    this.transform.position = new Vector3((this.transform.position.x), this.transform.position.y, this.transform.position.z - 0.5f);
+            //    jumpLeft = false;
+            //}
+            //else
+            //{
+            //    this.transform.position = new Vector3((this.transform.position.x), this.transform.position.y, this.transform.position.z + 0.5f);
+            //    jumpLeft = true;
+            //}
+            // ********** //            
         }
 
         if (candyTimer == 0.0f)
@@ -245,9 +241,7 @@ public class Script_Behaviors : MonoBehaviour
             candyTimer = 0.0f;
             destroyCandy();
         }
-        // ********** //
-        Debug.Log("Candy Timer: " + candyTimer);
-        
+        // ********** //        
     }
 
     public void destroyCandy()
@@ -258,7 +252,7 @@ public class Script_Behaviors : MonoBehaviour
     public void dark()
     {
         // Subtract from lPulseColor then loop through every light in the scene setting the new color.
-        lPulseColor -= 0.05f;       
+        lPulseColor -= 0.05f;
         for (int i = 0; i < _lights.Length; i++)
         {
             _lights[i].light.color = new Color(lPulseColor, lPulseColor, lPulseColor, lPulseColor);
@@ -271,10 +265,22 @@ public class Script_Behaviors : MonoBehaviour
         }
     }
 
+    // Stop Script_Timer from resetting the point lights each update.
+    public void stopTimerDim()
+    {
+        _manager.GetComponent<Script_Timer>().canDimLights = false;
+    }
+
+    // Set Script_Timer to resetting the point lights again.
+    public void startTimerDim()
+    {
+        _manager.GetComponent<Script_Timer>().canDimLights = true;
+    }
+
     public void bright()
     {
         // Add to lPulseColor then loop through every light in the scene setting the new color.
-        lPulseColor += 0.05f;        
+        lPulseColor += 0.05f;
         for (int i = 0; i < _lights.Length; i++)
         {
             _lights[i].light.color = new Color(lPulseColor, lPulseColor, lPulseColor, lPulseColor);
