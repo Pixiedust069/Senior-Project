@@ -1,0 +1,92 @@
+Initialize engine version: 4.6.1f1 (d1db7a1b5196)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GTX 760 (ID=0x1187)
+    Vendor:   NVIDIA
+    VRAM:     1990 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Amber\Documents\GitHub\Senior-Project\Nightshade_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Amber\Documents\GitHub\Senior-Project\Nightshade_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Amber\Documents\GitHub\Senior-Project\Nightshade_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\Amber\Documents\GitHub\Senior-Project\Nightshade_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Amber\Documents\GitHub\Senior-Project\Nightshade_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Amber\Documents\GitHub\Senior-Project\Nightshade_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Amber\Documents\GitHub\Senior-Project\Nightshade_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading C:\Users\Amber\Documents\GitHub\Senior-Project\Nightshade_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Amber\Documents\GitHub\Senior-Project\Nightshade_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Amber\Documents\GitHub\Senior-Project\Nightshade_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+- Completed reload, in  0.033 seconds
+desktop: 1440x900 60Hz; virtual: 2880x900 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+Platform assembly: C:\Users\Amber\Documents\GitHub\Senior-Project\Nightshade_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\Amber\Documents\GitHub\Senior-Project\Nightshade_Data\Managed\System.dll (this message is harmless)
+The referenced script on this Behaviour is missing!
+ 
+(Filename:  Line: 1788)
+
+UnloadTime: 9.318880 ms
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 207.
+Total: 1.839083 ms (FindLiveObjects: 0.029841 ms CreateObjectMapping: 0.025160 ms MarkObjects: 0.428612 ms  DeleteObjects: 0.033352 ms)
+
+The referenced script on this Behaviour is missing!
+ 
+(Filename:  Line: 1788)
+
+UnloadTime: 1.417785 ms
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 216.
+Total: 1.801342 ms (FindLiveObjects: 0.027208 ms CreateObjectMapping: 0.025453 ms MarkObjects: 0.466646 ms  DeleteObjects: 0.032767 ms)
+
+UnloadTime: 1.380921 ms
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 211.
+Total: 1.783495 ms (FindLiveObjects: 0.026916 ms CreateObjectMapping: 0.025453 ms MarkObjects: 0.462842 ms  DeleteObjects: 0.032182 ms)
+
+The referenced script on this Behaviour is missing!
+ 
+(Filename:  Line: 1788)
+
+UnloadTime: 1.382384 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 216.
+Total: 1.806608 ms (FindLiveObjects: 0.028379 ms CreateObjectMapping: 0.026916 ms MarkObjects: 0.478348 ms  DeleteObjects: 0.031889 ms)
+
+UnloadTime: 1.391161 ms
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 186.
+Total: 1.725274 ms (FindLiveObjects: 0.024283 ms CreateObjectMapping: 0.024868 ms MarkObjects: 0.394967 ms  DeleteObjects: 0.032475 ms)
+
+The referenced script on this Behaviour is missing!
+ 
+(Filename:  Line: 1788)
+
+UnloadTime: 1.138090 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 6 unused Assets to reduce memory usage. Loaded Objects now: 216.
+Total: 1.873021 ms (FindLiveObjects: 0.027793 ms CreateObjectMapping: 0.026623 ms MarkObjects: 0.483030 ms  DeleteObjects: 0.050321 ms)
+
+UnloadTime: 1.416029 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 171.
+Total: 1.766819 ms (FindLiveObjects: 0.021357 ms CreateObjectMapping: 0.034523 ms MarkObjects: 0.426271 ms  DeleteObjects: 0.034523 ms)
+
+The referenced script on this Behaviour is missing!
+ 
+(Filename:  Line: 1788)
+
+UnloadTime: 0.840548 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 216.
+Total: 1.881505 ms (FindLiveObjects: 0.034815 ms CreateObjectMapping: 0.038033 ms MarkObjects: 0.511409 ms  DeleteObjects: 0.037448 ms)
+
